@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "955658364439",
+    "project_id": "weathercheck61",
+    "storage_bucket": "weathercheck61.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955658364439:android:ca538d8f39e09a464a1e52",
+        "android_client_info": {
+          "package_name": "com.android.weathercheck"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiznPbSPbLRkETrXhbDoECdj5i13wXYL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
