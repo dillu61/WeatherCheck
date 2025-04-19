@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -68,7 +70,7 @@ public class login extends AppCompatActivity {
                 else {
                     progressBar.setVisibility(View.VISIBLE);
                     loginbtn.setEnabled(false);
-
+                    if (isInternetAvailable(this)) {
                     mAuth.signInWithEmailAndPassword(emailstr, passStr)
                             .addOnCompleteListener(task -> {
                                 progressBar.setVisibility(View.GONE);
@@ -84,9 +86,21 @@ public class login extends AppCompatActivity {
                                 } else {
                                     Toast.makeText(login.this, "wrong password or email", Toast.LENGTH_SHORT).show();
                                 }
-                            });
+                            });}
+                    else
+                        Toast.makeText(login.this, "Internet not connected", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+    public boolean isInternetAvailable(Context context) {
+        ConnectivityManager connectivityManager = 
+            (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager != null) {
+            NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+            return activeNetwork != null && activeNetwork.isConnected();
+        }
+        return false;
     }
 }
