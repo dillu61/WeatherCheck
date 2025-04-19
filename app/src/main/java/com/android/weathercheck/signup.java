@@ -7,7 +7,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -56,6 +57,7 @@ public class signup extends AppCompatActivity {
                     else{
                         progressBar.setVisibility(View.VISIBLE);
                         create.setEnabled(false);
+                        if (isInternetAvailable(this)){
                         mAuth.createUserWithEmailAndPassword(emailStr, passStr)
                                 .addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
@@ -67,9 +69,11 @@ public class signup extends AppCompatActivity {
                                     } else {
                                         progressBar.setVisibility(View.GONE);
                                         create.setEnabled(true);
-                                        Toast.makeText(signup.this, "Signup Failed" , Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(signup.this, "Signup Failed or already account existed" , Toast.LENGTH_SHORT).show();
                                     }
-                                });
+                                });}
+                        else
+                            Toast.makeText(signup.this, "check your internet connection" , Toast.LENGTH_SHORT).show();
 
 
                     }
@@ -93,5 +97,15 @@ public class signup extends AppCompatActivity {
 
 
 
+    }
+     public boolean isInternetAvailable(Context context) {
+        ConnectivityManager connectivityManager = 
+            (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager != null) {
+            NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+            return activeNetwork != null && activeNetwork.isConnected();
+        }
+        return false;
     }
 }
