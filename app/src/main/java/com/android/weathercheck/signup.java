@@ -1,5 +1,6 @@
 package com.android.weathercheck;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -57,7 +58,7 @@ public class signup extends AppCompatActivity {
                     else{
                         progressBar.setVisibility(View.VISIBLE);
                         create.setEnabled(false);
-                        if (isInternetAvailable(this)){
+                        if (isInternetAvailable(getApplicationContext())){
                         mAuth.createUserWithEmailAndPassword(emailStr, passStr)
                                 .addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
@@ -72,8 +73,12 @@ public class signup extends AppCompatActivity {
                                         Toast.makeText(signup.this, "Signup Failed or already account existed" , Toast.LENGTH_SHORT).show();
                                     }
                                 });}
-                        else
-                            Toast.makeText(signup.this, "check your internet connection" , Toast.LENGTH_SHORT).show();
+                        else {
+                            progressBar.setVisibility(View.GONE);
+                            create.setEnabled(true);
+                            Toast.makeText(signup.this, "check internet connection", Toast.LENGTH_SHORT).show();
+
+                        }
 
 
                     }
@@ -98,7 +103,7 @@ public class signup extends AppCompatActivity {
 
 
     }
-     public boolean isInternetAvailable(Context context) {
+     private boolean isInternetAvailable(Context context) {
         ConnectivityManager connectivityManager = 
             (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 

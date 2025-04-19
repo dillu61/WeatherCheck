@@ -1,5 +1,6 @@
 package com.android.weathercheck;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -70,7 +71,7 @@ public class login extends AppCompatActivity {
                 else {
                     progressBar.setVisibility(View.VISIBLE);
                     loginbtn.setEnabled(false);
-                    if (isInternetAvailable(this)) {
+                    if (isInternetAvailable(getApplicationContext())) {
                     mAuth.signInWithEmailAndPassword(emailstr, passStr)
                             .addOnCompleteListener(task -> {
                                 progressBar.setVisibility(View.GONE);
@@ -87,13 +88,16 @@ public class login extends AppCompatActivity {
                                     Toast.makeText(login.this, "wrong password or email", Toast.LENGTH_SHORT).show();
                                 }
                             });}
-                    else
-                        Toast.makeText(login.this, "Internet not connected", Toast.LENGTH_SHORT).show();
+                    else {
+                        progressBar.setVisibility(View.GONE);
+                        loginbtn.setEnabled(true);
+                        Toast.makeText(login.this, "Check internet connection", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
     }
-    public boolean isInternetAvailable(Context context) {
+    private boolean isInternetAvailable(Context context) {
         ConnectivityManager connectivityManager = 
             (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
