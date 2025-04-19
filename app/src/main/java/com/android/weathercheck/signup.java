@@ -70,7 +70,7 @@ public class signup extends AppCompatActivity {
                                     } else {
                                         progressBar.setVisibility(View.GONE);
                                         create.setEnabled(true);
-                                        Toast.makeText(signup.this, "Signup Failed or already account existed" , Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(signup.this, "Account already exists" , Toast.LENGTH_SHORT).show();
                                     }
                                 });}
                         else {
